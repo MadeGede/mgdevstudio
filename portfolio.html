@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio MG Web Studio - Project Website Premium untuk Berbagai Bisnis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">MG</span>
+                <span class="logo-subtext">Web Studio</span>
+            </a>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="portfolio.html" class="nav-link active">Portfolio</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-cta">
+                <a href="contact.html" class="btn btn-primary">Konsultasi Gratis</a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portfolio Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-hero-title">Portfolio <span class="text-accent">Premium</span></h1>
+                <p class="page-hero-subtitle">
+                    Setiap project MG Web Studio dirancang dengan pendekatan strategis. 
+                    Kami fokus pada solusi, pengalaman pengguna, dan hasil yang relevan bagi klien.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Filter -->
+    <section class="portfolio-filter">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Semua Project</button>
+                <button class="filter-btn" data-filter="website">Website Development</button>
+                <button class="filter-btn" data-filter="uiux">UI/UX Design</button>
+                <button class="filter-btn" data-filter="landing">Landing Page</button>
+                <button class="filter-btn" data-filter="company">Company Profile</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-grid-section">
+        <div class="container">
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="portfolio-item" data-category="website">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-overlay"></div>
+                            <div class="portfolio-category">Website Development</div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>TechStart Solutions</h3>
+                            <p>Website perusahaan teknologi dengan desain modern dan sistem manajemen konten custom.</p>
+                            <div class="portfolio-tech">
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                                <span>PHP</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-hover">
+                            <a href="#" class="btn btn-secondary">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="portfolio-item" data-category="landing">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-overlay"></div>
+                            <div class="portfolio-category">Landing Page</div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>EduLearn Online Course</h3>
+                            <p>Landing page dengan conversion rate tinggi untuk program kursus online premium.</p>
+                            <div class="portfolio-tech">
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                                <span>A/B Testing</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-hover">
+                            <a href="#" class="btn btn-secondary">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="portfolio-item" data-category="company">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-overlay"></div>
+                            <div class="portfolio-category">Company Profile</div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Luxury Property Group</h3>
+                            <p>Website company profile untuk perusahaan properti premium dengan galeri property virtual tour.</p>
+                            <div class="portfolio-tech">
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                                <span>360° Viewer</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-hover">
+                            <a href="#" class="btn btn-secondary">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="portfolio-item" data-category="uiux">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-overlay"></div>
+                            <div class="portfolio-category">UI/UX Design</div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>FinTech Mobile App</h3>
+                            <p>Desain UI/UX untuk aplikasi mobile FinTech dengan fokus pada user experience dan keamanan.</p>
+                            <div class="portfolio-tech">
+                                <span>Figma</span>
+                                <span>Prototyping</span>
+                                <span>User Testing</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-hover">
+                            <a href="#" class="btn btn-secondary">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="portfolio-item" data-category="website">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-overlay"></div>
+                            <div class="portfolio-category">Website Development</div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>HealthCare Clinic</h3>
+                            <p>Website dengan sistem appointment booking untuk klinik kesehatan modern.</p>
+                            <div class="portfolio-tech">
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                                <span>PHP/MySQL</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-hover">
+                            <a href="#" class="btn btn-secondary">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="portfolio-item" data-category="landing">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-overlay"></div>
+                            <div class="portfolio-category">Landing Page</div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Digital Marketing Agency</h3>
+                            <p>Landing page untuk agency digital marketing dengan fokus pada lead generation.</p>
+                            <div class="portfolio-tech">
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                                <span>Analytics</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-hover">
+                            <a href="#" class="btn btn-secondary">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-cta text-center mt-80">
+                <p class="section-subtitle">
+                    Setiap project kami kerjakan dengan standar premium dan fokus pada hasil yang relevan bagi bisnis klien.
+                </p>
+                <a href="contact.html" class="btn btn-primary btn-large mt-40">
+                    <span>Konsultasi Project Anda</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Apa Kata <span class="text-accent">Klien</span> Kami</h2>
+                <p class="section-subtitle">
+                    Testimoni dari bisnis yang telah mempercayakan website mereka kepada MG Web Studio
+                </p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>
+                            "MG Web Studio mengubah website biasa kami menjadi platform profesional yang benar-benar 
+                            mencerminkan kualitas bisnis kami. Hasilnya melebihi ekspektasi!"
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-name">Budi Santoso</div>
+                        <div class="author-company">CEO, TechStart Solutions</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>
+                            "Komunikasi langsung dengan founder membuat proses pengembangan website sangat transparan 
+                            dan efisien. Hasil akhirnya luar biasa, website kami sekarang loading cepat dan user-friendly."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-name">Sari Dewi</div>
+                        <div class="author-company">Marketing Director, Luxury Property Group</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>
+                            "Landing page yang dibuat MG Web Studio meningkatkan conversion rate kami sebesar 300%. 
+                            Investasi yang sangat worth it untuk bisnis kami."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-name">Andi Wijaya</div>
+                        <div class="author-company">Founder, EduLearn Online Course</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Project Anda Berikutnya?</h2>
+                <p>Jadikan website bisnis Anda se-profesional project-project di portfolio kami. Konsultasikan kebutuhan Anda sekarang.</p>
+                <a href="contact.html" class="btn btn-primary btn-large">
+                    <span>Konsultasi Project Anda</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <span class="logo-text">MG</span>
+                        <span class="logo-subtext">Web Studio</span>
+                    </a>
+                    <p class="footer-desc">
+                        Web Agency Premium yang berfokus pada pembuatan website modern, performa optimal, dan hasil nyata untuk bisnis.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/mg.devstudio/" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/628xxxxxxxxxx" target="_blank" class="social-link">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:contact@mgwebstudio.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Menu</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Website Development</a></li>
+                        <li><a href="services.html">UI/UX Design</a></li>
+                        <li><a href="services.html">Landing Page</a></li>
+                        <li><a href="services.html">Company Profile</a></li>
+                        <li><a href="services.html">Custom Website</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:contact@mgwebstudio.com">contact@mgwebstudio.com</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-instagram"></i>
+                            <a href="https://www.instagram.com/mg.devstudio/" target="_blank">@mg.devstudio</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Indonesia</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 MG Web Studio. All rights reserved.</p>
+                <p>Website built with premium quality & professional standards.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

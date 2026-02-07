@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Web Studio - Website Profesional yang Mengubah Pengunjung Menjadi Klien</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+    <div class="nav-container">
+        <!-- Logo -->
+        <a href="index.html" class="nav-logo">
+            <span class="logo-text">MG</span>
+            <span class="logo-subtext">Web Studio</span>
+        </a>
+        
+        <!-- Navigation Menu -->
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link active">About</a>
+            <a href="services.html" class="nav-link">Services</a>
+            <!-- <a href="portfolio.html" class="nav-link">Portfolio</a> -->
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        
+        <!-- CTA Button (Desktop only) -->
+        <div class="nav-cta">
+            <a href="contact.html" class="btn btn-primary">Konsultasi Gratis</a>
+        </div>
+        
+        <!-- Hamburger Menu (Mobile only) - PISAHKAN dari nav-cta -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+    <!-- Hero Section Cinematic -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+            <div class="hero-particles" id="heroParticles"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="title-line">Website Profesional</span>
+                        <span class="title-line">yang Mengubah</span>
+                        <span class="title-line">Pengunjung Menjadi Klien</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        MG Web Studio membantu bisnis tampil lebih kredibel, lebih meyakinkan, 
+                        dan lebih siap bersaing melalui website modern berstandar agency.
+                    </p>
+                    
+                    <div class="hero-cta">
+                        <a href="contact.html" class="btn btn-primary btn-large">
+                            <span>Konsultasi Gratis Sekarang</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="portfolio.html" class="btn btn-secondary btn-large">
+                            <span>Lihat Portfolio</span>
+                        </a>
+                    </div>
+                    
+                    <div class="hero-trust">
+                        <div class="trust-badge">
+                            <i class="fas fa-star"></i>
+                            <span>Premium Quality</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Professional Standards</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-trophy"></i>
+                            <span>Result-Oriented</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-scroll">
+            <div class="scroll-indicator">
+                <span>Explore More</span>
+                <div class="scroll-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Website Bukan Sekadar Tampilan, Tapi <span class="text-accent">Investasi Bisnis</span></h2>
+                <p class="section-subtitle">
+                    Di era digital, website adalah wajah bisnis Anda. Jika website Anda terlihat biasa, bisnis Anda akan dianggap biasa. 
+                    MG Web Studio hadir untuk memastikan brand Anda terlihat profesional, dipercaya, dan dipilih.
+                </p>
+            </div>
+            
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Fokus pada Pertumbuhan</h3>
+                    <p>Website yang kami bangun dirancang untuk mendorong konversi dan pertumbuhan bisnis, bukan sekadar keindahan visual.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Performa Optimal</h3>
+                    <p>Website cepat, responsif, dan SEO-friendly yang memberikan pengalaman pengguna terbaik dan ranking Google lebih tinggi.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Proses Kolaboratif</h3>
+                    <p>Anda berkomunikasi langsung dengan founder, tanpa perantara, untuk hasil yang lebih presisi dan sesuai ekspektasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="services-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Layanan <span class="text-accent">Premium</span> Kami</h2>
+                <p class="section-subtitle">
+                    Kami tidak membuat website sekadar jadi, kami membangun website yang bekerja untuk bisnis Anda.
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <h3>Website Development</h3>
+                        <p>Website cepat, responsif, dan profesional yang siap digunakan untuk membangun kepercayaan klien Anda.</p>
+                        <a href="services.html" class="service-link">
+                            Pelajari Lebih Lanjut
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <h3>UI/UX Design</h3>
+                        <p>Desain yang tidak hanya indah, tetapi mampu mengarahkan user untuk mengambil tindakan.</p>
+                        <a href="services.html" class="service-link">
+                            Pelajari Lebih Lanjut
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <h3>Custom Website</h3>
+                        <p>Solusi website yang dirancang khusus sesuai kebutuhan bisnis Anda dengan teknologi terkini.</p>
+                        <a href="services.html" class="service-link">
+                            Pelajari Lebih Lanjut
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-80">
+                <a href="services.html" class="btn btn-secondary">
+                    <span>Lihat Semua Layanan</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Siap Membuat Website yang Mencerminkan Kualitas Bisnis Anda?</h2>
+                <p>Jangan biarkan website biasa-biasa saja menghambat pertumbuhan bisnis Anda. Mulai percakapan dengan kami hari ini.</p>
+                <a href="contact.html" class="btn btn-primary btn-large">
+                    <span>Konsultasi Gratis Sekarang</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <span class="logo-text">MG</span>
+                        <span class="logo-subtext">Web Studio</span>
+                    </a>
+                    <p class="footer-desc">
+                        Web Agency Premium yang berfokus pada pembuatan website modern, performa optimal, dan hasil nyata untuk bisnis.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/mg.devstudio/" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/628xxxxxxxxxx" target="_blank" class="social-link">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:contact@mgwebstudio.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Menu</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <!-- <li><a href="portfolio.html">Portfolio</a></li> -->
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Website Development</a></li>
+                        <li><a href="services.html">UI/UX Design</a></li>
+                        <li><a href="services.html">Landing Page</a></li>
+                        <li><a href="services.html">Company Profile</a></li>
+                        <li><a href="services.html">Custom Website</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:mgdevstudio.official@gmail.com">mgdevstudio.official@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-instagram"></i>
+                            <a href="https://www.instagram.com/mg.devstudio/" target="_blank">@mg.devstudio</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jakarta - Indonesia</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 MG Web Studio. All rights reserved.</p>
+                <p>Website built with premium quality & professional standards.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
