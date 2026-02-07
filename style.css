@@ -5107,3 +5107,38 @@ textarea {
 .image-placeholder:hover::after {
     opacity: 1;
 }
+/* ============================
+   FIX HORIZONTAL SCROLL
+   ============================ */
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+* {
+    max-width: 100%; /* Mencegah elemen melebihi lebar parent */
+}
+
+/* Untuk elemen dengan lebar viewport, pastikan tidak melebihi 100vw */
+.container, .wrapper, section, header, footer, main, .content {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Untuk elemen dengan position absolute, pastikan tidak keluar dari viewport */
+.absolute-element {
+    left: 0;
+    right: 0;
+}
+
+/* Pastikan gambar dan media tidak melebihi container */
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Perbaiki untuk elemen dengan grid dan flex yang mungkin menyebabkan overflow */
+.grid, .flex {
+    max-width: 100%;
+}
