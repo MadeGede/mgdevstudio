@@ -71,68 +71,111 @@ function initEmailJS() {
 }
 
 // ============================
-// NAVIGATION
+// NAVIGATION - SINGLE VERSION (HAPUS DUPLIKAT)
 // ============================
 function initNavigation() {
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
     
     if (menuToggle && navMenu) {
-        console.log('Navigation initialized');
+        console.log('✅ Navigation initialized');
         
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            menuToggle.innerHTML = navMenu.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
+        // Function untuk toggle menu
+        function toggleMenu() {
+            const isActive = navMenu.classList.contains('active');
             
-            // Prevent body scroll when menu is open
-            if (navMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
+            if (isActive) {
+                closeMenu();
             } else {
-                document.body.style.overflow = '';
+                openMenu();
             }
+        }
+        
+        // Function untuk open menu
+        function openMenu() {
+            navMenu.classList.add('active');
+            menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function untuk close menu
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            document.body.style.overflow = '';
+        }
+        
+        // Event listener untuk toggle menu
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
         });
         
-        // Close menu when clicking on a link
+        // Close menu ketika klik link
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                document.body.style.overflow = '';
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // Jika anchor link, lakukan smooth scroll
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    // Close menu
+                    closeMenu();
+                    
+                    // Scroll ke target
+                    const target = document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                // Jika link ke halaman lain, biarkan browser handle
+                else {
+                    closeMenu();
+                }
             });
         });
         
-        // Close menu when clicking outside
+        // Close menu ketika klik di luar
         document.addEventListener('click', function(event) {
-            if (!event.target.closest('.nav-menu') && !event.target.closest('.menu-toggle')) {
-                navMenu.classList.remove('active');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                document.body.style.overflow = '';
+            // Jika klik di luar menu dan toggle button, tutup menu
+            if (!event.target.closest('.nav-menu') && 
+                !event.target.closest('.menu-toggle') &&
+                navMenu.classList.contains('active')) {
+                closeMenu();
             }
         });
+        
+        // Close menu dengan Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+    } else {
+        console.warn('Navigation elements not found');
     }
     
-    // Smooth scroll for anchor links
+    // Smooth scroll untuk semua anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             
-            // Skip if href is just "#"
-            if (href === '#') return;
+            // Skip jika href hanya "#"
+            if (href === '#' || href === '#!') return;
             
-            // Check if it's an internal anchor link
-            if (href.startsWith('#') && document.querySelector(href)) {
+            const target = document.querySelector(href);
+            if (target) {
                 e.preventDefault();
                 
-                const target = document.querySelector(href);
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
             }
         });
     });
@@ -218,7 +261,8 @@ function initParticles() {
             box-shadow: 0 0 8px rgba(201, 162, 77, 0.2);
             animation: float ${duration}s ease-in-out ${delay}s infinite;
             opacity: 0.6;
-            z-index: -1;
+            z-index: 1;
+            pointer-events: none;
         `;
         
         container.appendChild(particle);
@@ -348,175 +392,165 @@ function initContactForm() {
         'consultation': 'Konsultasi Gratis'
     };
     
-    // Di dalam event listener submit form
-contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    // Collect form data
-    const formData = {
-        name: formElements.name.value.trim(),
-        email: formElements.email.value.trim(),
-        phone: formElements.phone?.value.trim() || 'Tidak diisi',
-        company: formElements.company?.value.trim() || 'Tidak diisi',
-        service: formElements.service.value,
-        message: formElements.message.value.trim(),
-        timestamp: new Date().toLocaleString('id-ID'),
-        page_url: window.location.href
-    };
-    
-    // Simpan email user untuk ditampilkan di pesan success
-    const userEmail = formData.email;
-    
-    // ... validasi ...
-    
-    try {
-        // Kirim via Email
-        const success = await sendEmail(formData);
-        const message = success 
-            ? '✅ Pesan Anda berhasil dikirim!' 
-            : '❌ Gagal mengirim pesan. Silakan coba lagi.';
+    // Submit form handler
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        // Tampilkan pesan dengan email user
-        showFormMessage(message, success ? 'success' : 'error', userEmail);
-        
-        // ... reset form ...
-    } catch (error) {
-        // ... error handling ...
-    }
-});
-    // Function to send email using EmailJS
-    async function sendEmail(formData) {
-    try {
-        if (typeof emailjs === 'undefined' || !window.EMAILJS_CONFIG) {
-            console.error('EmailJS not properly initialized');
-            return false;
-        }
-        
-        // Prepare template parameters untuk admin
-        const adminTemplateParams = {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company: formData.company,
-            service: serviceNames[formData.service] || formData.service,
-            message: formData.message,
-            timestamp: formData.timestamp,
-            page_url: formData.page_url,
-            year: new Date().getFullYear()
+        // Collect form data
+        const formData = {
+            name: formElements.name.value.trim(),
+            email: formElements.email.value.trim(),
+            phone: formElements.phone?.value.trim() || 'Tidak diisi',
+            company: formElements.company?.value.trim() || 'Tidak diisi',
+            service: formElements.service.value,
+            message: formElements.message.value.trim(),
+            timestamp: new Date().toLocaleString('id-ID'),
+            page_url: window.location.href
         };
         
-        console.log('📧 Sending emails...');
+        // Validasi form
+        if (!formData.name || !formData.email || !formData.message) {
+            showFormMessage('Harap isi semua field yang wajib diisi.', 'warning');
+            return;
+        }
         
-        // 1. Kirim email ke admin (utama)
-        const adminPromise = emailjs.send(
-            window.EMAILJS_CONFIG.SERVICE_ID,
-            window.EMAILJS_CONFIG.TEMPLATE_ID,
-            adminTemplateParams
-        );
+        if (!emailRegex.test(formData.email)) {
+            showFormMessage('Format email tidak valid.', 'warning');
+            return;
+        }
         
-        // 2. Kirim auto reply ke user (secondary)
-        const autoReplyPromise = sendAutoReplyToUser(formData);
+        // Disable submit button
+        formElements.submitBtn.disabled = true;
+        formElements.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
         
-        // 3. Timeout setelah 20 detik
-        const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('Email sending timeout')), 20000);
-        });
-        
-        // Tunggu semua promise selesai atau timeout
-        const [adminResponse, autoReplyResult] = await Promise.race([
-            Promise.all([adminPromise, autoReplyPromise]),
-            timeoutPromise
-        ]);
-        
-        console.log('📩 Both emails sent successfully');
-        console.log('- Admin notification:', adminResponse.status);
-        console.log('- Auto reply to user:', autoReplyResult ? 'Success' : 'Failed');
-        
-        // Return true jika email ke admin berhasil
-        // Auto reply failure tidak mengganggu flow utama
-        return true;
-        
-    } catch (error) {
-        console.error('❌ Email sending failed:', error.message || error);
-        return false;
+        try {
+            // Kirim email
+            const success = await sendEmail(formData);
+            
+            if (success) {
+                showFormMessage(
+                    '✅ Pesan Anda berhasil dikirim! Kami akan menghubungi Anda dalam 1-2 jam kerja.',
+                    'success',
+                    formData.email
+                );
+                
+                // Reset form
+                contactForm.reset();
+            } else {
+                showFormMessage('❌ Gagal mengirim pesan. Silakan coba lagi atau hubungi kami langsung.', 'error');
+            }
+        } catch (error) {
+            console.error('Submit error:', error);
+            showFormMessage('❌ Terjadi kesalahan. Silakan coba lagi.', 'error');
+        } finally {
+            // Re-enable submit button
+            formElements.submitBtn.disabled = false;
+            formElements.submitBtn.innerHTML = 'Kirim Pesan <i class="fas fa-paper-plane"></i>';
+        }
+    });
+    
+    // Function to send email using EmailJS
+    async function sendEmail(formData) {
+        try {
+            if (typeof emailjs === 'undefined' || !window.EMAILJS_CONFIG) {
+                console.error('EmailJS not properly initialized');
+                return false;
+            }
+            
+            // Prepare template parameters untuk admin
+            const adminTemplateParams = {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                company: formData.company,
+                service: serviceNames[formData.service] || formData.service,
+                message: formData.message,
+                timestamp: formData.timestamp,
+                page_url: formData.page_url,
+                year: new Date().getFullYear()
+            };
+            
+            console.log('📧 Sending emails...');
+            
+            // 1. Kirim email ke admin (utama)
+            const adminPromise = emailjs.send(
+                window.EMAILJS_CONFIG.SERVICE_ID,
+                window.EMAILJS_CONFIG.TEMPLATE_ID,
+                adminTemplateParams
+            );
+            
+            // 2. Kirim auto reply ke user (secondary)
+            const autoReplyPromise = sendAutoReplyToUser(formData);
+            
+            // 3. Timeout setelah 20 detik
+            const timeoutPromise = new Promise((_, reject) => {
+                setTimeout(() => reject(new Error('Email sending timeout')), 20000);
+            });
+            
+            // Tunggu semua promise selesai atau timeout
+            const [adminResponse, autoReplyResult] = await Promise.race([
+                Promise.all([adminPromise, autoReplyPromise]),
+                timeoutPromise
+            ]);
+            
+            console.log('📩 Both emails sent successfully');
+            console.log('- Admin notification:', adminResponse.status);
+            console.log('- Auto reply to user:', autoReplyResult ? 'Success' : 'Failed');
+            
+            return true;
+            
+        } catch (error) {
+            console.error('❌ Email sending failed:', error.message || error);
+            return false;
+        }
     }
-}
     
     // Function to show form message
     function showFormMessage(text, type, userEmail = '') {
-    if (!formMessage) return;
-    
-    // Clear any existing timeout
-    if (window.formMessageTimeout) {
-        clearTimeout(window.formMessageTimeout);
-    }
-    
-    let messageHTML = '';
-    
-    if (type === 'success') {
-        messageHTML = `
-            <div class="message-content ${type}">
-                <div class="message-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="message-text">
-                    <h4>Berhasil!</h4>
-                    <p>${text}</p>
-                    <small>
-                        <i class="fas fa-envelope"></i> Email konfirmasi telah dikirim ke <strong>${userEmail}</strong>
-                        <br>
-                        <i class="fas fa-info-circle"></i> Periksa folder spam jika tidak menemukan email kami
-                    </small>
-                </div>
-            </div>
-        `;
-    } else {
-        const icon = type === 'error' ? 'exclamation-circle' : 'info-circle';
-        const title = type === 'error' ? 'Terjadi Kesalahan' : 'Perhatian';
+        if (!formMessage) return;
         
-        messageHTML = `
-            <div class="message-content ${type}">
-                <div class="message-icon">
-                    <i class="fas fa-${icon}"></i>
-                </div>
-                <div class="message-text">
-                    <h4>${title}</h4>
-                    <p>${text}</p>
-                </div>
-            </div>
-        `;
-    }
-    
-    formMessage.innerHTML = messageHTML;
-    formMessage.className = `form-message ${type}`;
-    formMessage.style.display = 'block';
-    formMessage.style.opacity = '1';
-    
-    // ... auto hide logic ...
-
-       // Di dalam showFormMessage function
-if (type === 'success') {
-    // Update pesan success
-    const successMessage = `
-        <div class="message-content ${type}">
-            <div class="message-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="message-text">
-                <h4>Berhasil!</h4>
-                <p>${text}</p>
-                <small>
-                    <i class="fas fa-envelope"></i> Email konfirmasi telah dikirim ke <strong>${userEmail}</strong>
-                    <br>
-                    <i class="fas fa-info-circle"></i> Periksa folder spam jika tidak menemukan email kami
-                </small>
-            </div>
-        </div>
-    `;
-    
-    formMessage.innerHTML = successMessage;
-}
+        // Clear any existing timeout
+        if (window.formMessageTimeout) {
+            clearTimeout(window.formMessageTimeout);
+        }
         
+        let messageHTML = '';
+        
+        if (type === 'success') {
+            messageHTML = `
+                <div class="message-content ${type}">
+                    <div class="message-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="message-text">
+                        <h4>Berhasil!</h4>
+                        <p>${text}</p>
+                        <small>
+                            <i class="fas fa-envelope"></i> Email konfirmasi telah dikirim ke <strong>${userEmail}</strong>
+                            <br>
+                            <i class="fas fa-info-circle"></i> Periksa folder spam jika tidak menemukan email kami
+                        </small>
+                    </div>
+                </div>
+            `;
+        } else {
+            const icon = type === 'error' ? 'exclamation-circle' : 'info-circle';
+            const title = type === 'error' ? 'Terjadi Kesalahan' : 'Perhatian';
+            
+            messageHTML = `
+                <div class="message-content ${type}">
+                    <div class="message-icon">
+                        <i class="fas fa-${icon}"></i>
+                    </div>
+                    <div class="message-text">
+                        <h4>${title}</h4>
+                        <p>${text}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        formMessage.innerHTML = messageHTML;
         formMessage.className = `form-message ${type}`;
         formMessage.style.display = 'block';
         formMessage.style.opacity = '1';
@@ -661,6 +695,51 @@ function showNotification(message, type = 'info') {
 }
 
 // ============================
+// FUNCTION UNTUK AUTO REPLY KE USER
+// ============================
+async function sendAutoReplyToUser(userData) {
+    try {
+        console.log('📧 Sending auto reply to user:', userData.email);
+        
+        // Map service value to readable name
+        const serviceNames = {
+            'website': 'Website Development',
+            'uiux': 'UI/UX Design',
+            'landing': 'Landing Page',
+            'company': 'Company Profile Website',
+            'maintenance': 'Website Maintenance',
+            'custom': 'Custom Website',
+            'consultation': 'Konsultasi Gratis'
+        };
+        
+        // Prepare template parameters untuk auto reply
+        const autoReplyParams = {
+            name: userData.name,
+            email: userData.email,
+            phone: userData.phone,
+            service_name: serviceNames[userData.service] || userData.service,
+            message: userData.message.substring(0, 200) + (userData.message.length > 200 ? '...' : ''),
+            year: new Date().getFullYear(),
+            timestamp: new Date().toLocaleString('id-ID')
+        };
+        
+        // Kirim auto reply ke user
+        const response = await emailjs.send(
+            window.EMAILJS_CONFIG.SERVICE_ID,
+            window.EMAILJS_CONFIG.AUTO_REPLY_TEMPLATE_ID,
+            autoReplyParams
+        );
+        
+        console.log('✅ Auto reply sent to user:', response.status);
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Failed to send auto reply:', error.message || error);
+        return false;
+    }
+}
+
+// ============================
 // RESIZE HANDLER
 // ============================
 function handleResize() {
@@ -787,6 +866,22 @@ function addCustomStyles() {
             }
         }
         
+        /* Navigation Overlay */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .nav-overlay.active {
+            display: block;
+        }
+        
         /* Notification Styles */
         .notification {
             position: fixed;
@@ -835,6 +930,26 @@ function addCustomStyles() {
                 left: 20px;
                 right: 20px;
                 max-width: none;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: calc(100vh - 70px);
+                background: rgba(11, 11, 13, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                overflow-y: auto;
+            }
+            
+            .nav-menu.active {
+                right: 0;
             }
         }
     `;
@@ -900,273 +1015,3 @@ window.addEventListener('load', function() {
         document.body.classList.add('loaded');
     }, 100);
 });
-
-// ============================
-// PERIKSA PERUBAHAN DI SERVICE ID
-// ============================
-// PERHATIAN: Service ID Anda sebelumnya 'service_mg' 
-// Saya ubah ke 'service_3oe0pcb' yang mungkin lebih valid
-// Jika ingin pakai yang lama, ubah di initEmailJS()
-
-// ============================
-// NAVIGATION FOR MULTI-PAGE WEBSITE
-// ============================
-function initNavigation() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    
-    if (menuToggle && navMenu) {
-        console.log('✅ Navigation initialized for multi-page website');
-        
-        // Create overlay element
-        const navOverlay = document.createElement('div');
-        navOverlay.className = 'nav-overlay';
-        document.body.appendChild(navOverlay);
-        
-        // Function to check if mobile view
-        function isMobileView() {
-            return window.innerWidth <= 1024;
-        }
-        
-        // Function to setup menu based on screen size
-        function setupMenuForScreenSize() {
-            if (!isMobileView()) {
-                // Desktop: reset menu styles
-                closeMenu();
-                navMenu.style.position = 'static';
-                navMenu.style.right = '0';
-                navMenu.style.width = 'auto';
-                navMenu.style.height = 'auto';
-                navMenu.style.background = 'transparent';
-                navMenu.style.boxShadow = 'none';
-                navMenu.style.flexDirection = 'row';
-                navMenu.style.gap = '30px';
-                navMenu.style.padding = '0';
-                navOverlay.style.display = 'none';
-                document.body.style.overflow = '';
-            } else {
-                // Mobile: setup for mobile menu
-                navOverlay.style.display = 'block';
-            }
-        }
-        
-        // Initial setup
-        setupMenuForScreenSize();
-        
-        // Function to open menu
-        function openMenu() {
-            if (!isMobileView()) return;
-            
-            navMenu.classList.add('active');
-            menuToggle.classList.add('active');
-            navOverlay.classList.add('active');
-            document.body.classList.add('menu-open');
-            
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
-        }
-        
-        // Function to close menu
-        function closeMenu() {
-            navMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-            navOverlay.classList.remove('active');
-            document.body.classList.remove('menu-open');
-            
-            // Restore body scroll
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
-        }
-        
-        // Function to toggle menu
-        function toggleMenu() {
-            if (!isMobileView()) return;
-            
-            if (navMenu.classList.contains('active')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        }
-        
-        // Event Listeners
-        
-        // Hamburger menu click
-        menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMenu();
-        });
-        
-        // Close menu when clicking overlay
-        navOverlay.addEventListener('click', function() {
-            closeMenu();
-        });
-        
-        // Handle navigation links for multi-page website
-        const navLinks = navMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                const isCurrentPage = window.location.pathname.endsWith(href) || 
-                                     (href === 'index.html' && window.location.pathname.endsWith('/'));
-                
-                // Jika link ke halaman yang berbeda
-                if (!isCurrentPage) {
-                    // Close menu if mobile
-                    if (isMobileView()) {
-                        closeMenu();
-                    }
-                    // Browser akan redirect ke halaman lain
-                    return;
-                }
-                
-                // Jika link ke halaman yang sama (anchor atau refresh)
-                e.preventDefault();
-                
-                // Close menu if mobile
-                if (isMobileView()) {
-                    closeMenu();
-                }
-                
-                // If it's index.html with anchor
-                if (href.includes('#')) {
-                    const hashIndex = href.indexOf('#');
-                    if (hashIndex !== -1) {
-                        const anchorId = href.substring(hashIndex + 1);
-                        const targetElement = document.getElementById(anchorId);
-                        
-                        if (targetElement) {
-                            // Get navbar height
-                            const navbar = document.querySelector('.navbar');
-                            const navbarHeight = navbar ? navbar.offsetHeight : 70;
-                            
-                            // Smooth scroll to anchor
-                            window.scrollTo({
-                                top: targetElement.offsetTop - navbarHeight,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                } else {
-                    // If it's just page refresh, scroll to top
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
-                
-                // Update active link
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-        
-        // Set active link based on current page
-        function setActiveLink() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const linkHref = link.getAttribute('href');
-                
-                // Check if this link matches current page
-                if ((currentPage === '' && linkHref === 'index.html') || 
-                    currentPage === linkHref) {
-                    link.classList.add('active');
-                }
-            });
-        }
-        
-        // Initial active link setup
-        setActiveLink();
-        
-        // Close menu when clicking outside on mobile
-        document.addEventListener('click', function(event) {
-            if (isMobileView() && 
-                navMenu.classList.contains('active') &&
-                !navMenu.contains(event.target) &&
-                !menuToggle.contains(event.target)) {
-                closeMenu();
-            }
-        });
-        
-        // Close menu with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && navMenu.classList.contains('active')) {
-                closeMenu();
-            }
-        });
-        
-        // Handle window resize
-        let resizeTimer;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function() {
-                setupMenuForScreenSize();
-            }, 250);
-        });
-        
-        // Navbar background on scroll
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (navbar) {
-                if (window.scrollY > 50) {
-                    navbar.style.backgroundColor = 'rgba(11, 11, 13, 0.98)';
-                    navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-                } else {
-                    navbar.style.backgroundColor = 'rgba(11, 11, 13, 0.95)';
-                    navbar.style.boxShadow = 'none';
-                }
-            }
-        });
-        
-    } else {
-        console.error('❌ Navigation elements not found');
-        if (!menuToggle) console.error('Missing: #menuToggle');
-        if (!navMenu) console.error('Missing: #navMenu');
-    }
-}
-// ============================
-// FUNCTION UNTUK AUTO REPLY KE USER
-// ============================
-async function sendAutoReplyToUser(userData) {
-    try {
-        console.log('📧 Sending auto reply to user:', userData.email);
-        
-        // Map service value to readable name
-        const serviceNames = {
-            'website': 'Website Development',
-            'uiux': 'UI/UX Design',
-            'landing': 'Landing Page',
-            'company': 'Company Profile Website',
-            'maintenance': 'Website Maintenance',
-            'custom': 'Custom Website',
-            'consultation': 'Konsultasi Gratis'
-        };
-        
-        // Prepare template parameters untuk auto reply
-        const autoReplyParams = {
-            name: userData.name,
-            email: userData.email,
-            phone: userData.phone,
-            service_name: serviceNames[userData.service] || userData.service,
-            message: userData.message.substring(0, 200) + (userData.message.length > 200 ? '...' : ''),
-            year: new Date().getFullYear(),
-            timestamp: new Date().toLocaleString('id-ID')
-        };
-        
-        // Kirim auto reply ke user
-        const response = await emailjs.send(
-            window.EMAILJS_CONFIG.SERVICE_ID,
-            window.EMAILJS_CONFIG.AUTO_REPLY_TEMPLATE_ID,
-            autoReplyParams
-        );
-        
-        console.log('✅ Auto reply sent to user:', response.status);
-        return true;
-        
-    } catch (error) {
-        console.error('❌ Failed to send auto reply:', error.message || error);
-        return false;
-    }
-}
